@@ -6,8 +6,9 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rb;
     public float speed = 5f;
     float horizontalMovement = 0f;
-    float jumpForce = 10f;
+    public float jumpForce = 10f;
     bool isGrounded = true;
+    bool lastRight = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,6 +20,24 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(horizontalMovement * speed, rb.linearVelocityY);
+
+        if(horizontalMovement > 0.01f)
+        {
+            FlipRight();
+        }
+        else if(horizontalMovement < -0.01f)
+        {
+            FlipLeft();
+        }
+
+    }
+    public void FlipRight()
+    {
+        transform.localScale = new Vector3(1f, 1f, 1f);
+    }
+    public void FlipLeft()
+    {
+        transform.localScale = new Vector3(-1f, 1f, 1f);
     }
 
     public void Move(InputAction.CallbackContext context)
