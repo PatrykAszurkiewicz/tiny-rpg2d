@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class PlayerMove : MonoBehaviour
     float horizontalMovement = 0f;
     public float jumpForce = 10f;
     bool isGrounded = true;
-    bool lastRight = true;
     //Sprint 
     public float speedMult = 1.5f;
     private bool isSprinting = false;
@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         {
             currentSpeed *= speedMult;
             stamina -= staminaDrainRate * Time.fixedDeltaTime;
-            if (stamina < 0f) stamina = 0f;
+            if (stamina < 0.01f) stamina = 0f;
         }
         else
         {
@@ -51,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         {
             FlipLeft();
         }
-        Debug.Log("Stamina: " + stamina);
 
     }
     public void FlipRight()
