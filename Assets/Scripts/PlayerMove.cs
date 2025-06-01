@@ -9,6 +9,9 @@ public class PlayerMove : MonoBehaviour
     public float jumpForce = 10f;
     bool isGrounded = true;
     bool lastRight = true;
+    public float speedMult = 1.5f;
+    private bool isSprinting = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +22,8 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(horizontalMovement * speed, rb.linearVelocityY);
+        float currentSpeed = isSprinting ? speed * speedMult : speed;
+        rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocityY);
 
         if(horizontalMovement > 0.01f)
         {
@@ -51,6 +55,10 @@ public class PlayerMove : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
             isGrounded = false;
         }
+    }
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        isSprinting = context.ReadValueAsButton();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
