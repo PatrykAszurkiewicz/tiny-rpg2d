@@ -8,6 +8,8 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5f;
     float horizontalMovement = 0f;
     public float jumpForce = 10f;
+    public int maxJumps = 2;
+    private int jumpsLeft;
     bool isGrounded = true;
     //Sprint 
     public float speedMult = 1.5f;
@@ -22,6 +24,7 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         stamina = maxStamina;
+        jumpsLeft = maxJumps;
     }
 
     // Update is called once per frame
@@ -68,19 +71,30 @@ public class PlayerMove : MonoBehaviour
     }
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded)
+        if (context.performed && jumpsLeft > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
+            jumpsLeft--;
+            isGrounded = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            jumpsLeft = maxJumps;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
             isGrounded = false;
         }
     }
     public void Sprint(InputAction.CallbackContext context)
     {
         isSprinting = context.ReadValueAsButton();
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Zak³adamy, ¿e wszystko co ma Collider to ziemia – mo¿na to rozwin¹æ
-        isGrounded = true;
     }
 }
