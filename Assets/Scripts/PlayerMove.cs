@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,28 +11,41 @@ public class PlayerMove : MonoBehaviour
     public float jumpForce = 10f;
     public int maxJumps = 2;
     private int jumpsLeft;
+    //Ground check ------------------
     bool isGrounded = true;
-    //Sprint 
+    public Transform groundCheckPlace;
+    public Vector2 groundCheckSize = new Vector2 (1f, 0.2f);
+    public LayerMask groundLayers;
+    //Sprint ------------------------
     public float speedMult = 1.5f;
     private bool isSprinting = false;
-    public float maxStamina = 5f;              // maksymalna wytrzyma³oœæ w sekundach sprintu
-    public float stamina;                      // aktualna wytrzyma³oœæ
-    public float staminaRegenRate = 1f;        // ile wytrzyma³oœci wraca na sekundê
-    public float staminaDrainRate = 1.5f;      // ile wytrzyma³oœci schodzi na sekundê
+    public float maxStamina = 5f;              // max stamina
+    public float stamina;                      // current stamina
+    public float staminaRegenRate = 1f;        // stamina regen rate
+    public float staminaDrainRate = 1.5f;      // stamina usage rate
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(groundCheckPlace.position, groundCheckSize);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         stamina = maxStamina;
         jumpsLeft = maxJumps;
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        isGrounded = Physics2D.OverlapBox(groundCheckPlace.position,groundCheckSize,0f,groundLayers);
+
         float currentSpeed = speed;
         bool isTryingToSprint = isSprinting && Mathf.Abs(horizontalMovement) > 0.01f && stamina > 0;
+
         if(isTryingToSprint)
         {
             currentSpeed *= speedMult;
@@ -71,30 +85,19 @@ public class PlayerMove : MonoBehaviour
     }
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isGrounded)
+        {
+            jumpsLeft = maxJumps;
+        }
         if (context.performed && jumpsLeft > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
             jumpsLeft--;
-            isGrounded = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            jumpsLeft = maxJumps;
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
         }
     }
     public void Sprint(InputAction.CallbackContext context)
     {
         isSprinting = context.ReadValueAsButton();
     }
+    
 }
