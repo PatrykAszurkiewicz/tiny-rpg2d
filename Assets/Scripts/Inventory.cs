@@ -7,8 +7,9 @@ public class Inventory : MonoBehaviour
     public static Inventory Instance;
     public int maxSlots = 20;
     public List<InventorySlot> slots = new();
-
-    private void Awake()
+    public ItemData testItem;
+    
+    private void Awake() //singleton
     {
         if(Instance == null)
         {
@@ -23,9 +24,13 @@ public class Inventory : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public bool AddItem(ItemData item, int amount = 1)
+    public void Start()
     {
-        for (int i = 0; i < slots.Count; i++)
+        AddItem(testItem, 3);
+    }
+    public bool AddItem(ItemData item, int amount = 1) //addding items
+    {
+        for (int i = 0; i < slots.Count; i++) //is item=item and less than maxstacks but more than 1
         {
             if (!slots[i].IsEmpty && slots[i].item == item && item.isStackable && slots[i].quantity < item.maxStack)
             {
@@ -33,7 +38,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
-        for (int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < slots.Count; i++) //is slot empty
         {
             if (slots[i].IsEmpty)
             {
@@ -42,7 +47,10 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+        InventoryUI.Instance?.RefreshUI();
+
         Debug.Log("Brak miejsca w ekwipunku");
         return false;
     }
+
 }
