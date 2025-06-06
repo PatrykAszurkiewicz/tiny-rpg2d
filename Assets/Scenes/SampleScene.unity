@@ -1095,57 +1095,6 @@ MonoBehaviour:
   stamina: 0
   staminaRegenRate: 1
   staminaDrainRate: 1.5
---- !u!1 &1004436171
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1004436172}
-  - component: {fileID: 1004436173}
-  m_Layer: 5
-  m_Name: InventorySystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1004436172
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004436171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1921463288}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1004436173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004436171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf9ad85489fe4634cb95aae74969bae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSlots: 20
-  slots: []
-  testItem: {fileID: 11400000, guid: 90d82fbf614d3d14eaa258f9dbf7225d, type: 2}
 --- !u!1 &1016135376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,8 +1511,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1004436172}
+  m_Children: []
   m_Father: {fileID: 755769111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1629,7 +1577,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 5, y: 5}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -1642,10 +1590,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1921463287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81a0b55139ab5f840bb782af102bbbe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2315cfa6be901f34595fa77f404d00ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 4279269296342694358, guid: 93cb302b84462994690dea86537d09c8, type: 3}
+  slotsParent: {fileID: 1921463288}
+  NumberOfSlots: 10
 --- !u!1 &1977613558
 GameObject:
   m_ObjectHideFlags: 0

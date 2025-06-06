@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4827a2dfc0f914690fa8fc5120c90e, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  itemName: Wood
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  itemName: Sword
+  icon: {fileID: 21300000, guid: 0a4e50f7e2f107342baf8e728868f3a2, type: 3}
   isStackable: 1
   maxStack: 99
