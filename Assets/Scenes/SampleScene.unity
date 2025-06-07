@@ -1596,6 +1596,10 @@ MonoBehaviour:
   slotPrefab: {fileID: 4279269296342694358, guid: 93cb302b84462994690dea86537d09c8, type: 3}
   slotsParent: {fileID: 1921463288}
   NumberOfSlots: 10
+  testItem1: {fileID: 11400000, guid: 90d82fbf614d3d14eaa258f9dbf7225d, type: 2}
+  testItem2: {fileID: 11400000, guid: 90d82fbf614d3d14eaa258f9dbf7225d, type: 2}
+  testItem3: {fileID: 11400000, guid: 90d82fbf614d3d14eaa258f9dbf7225d, type: 2}
+  itemsInfo: []
 --- !u!1 &1977613558
 GameObject:
   m_ObjectHideFlags: 0
