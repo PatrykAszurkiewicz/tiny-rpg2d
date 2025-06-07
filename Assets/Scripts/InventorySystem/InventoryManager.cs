@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     public ItemData testItem3;
 
     private List<InventorySlot> inventorySlots = new List<InventorySlot>();
-    public List<InventorySlotUI> itemsInfo = new List<InventorySlotUI>();
+    public List<InventorySlotUI> slotUIs = new List<InventorySlotUI>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +34,7 @@ public class InventoryManager : MonoBehaviour
             GameObject slot = Instantiate(slotPrefab, slotsParent);
             InventorySlotUI slotUI = slot.GetComponent<InventorySlotUI>();
             slotUI.SetSlot(newSlot);
-            itemsInfo.Add(slotUI);
+            slotUIs.Add(slotUI);
         }
     }
 
@@ -65,9 +64,9 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        for (int i = 0; i < itemsInfo.Count; i++)
+        for (int i = 0; i < slotUIs.Count; i++)
         {
-            itemsInfo[i].SetSlot(inventorySlots[i]);
+            slotUIs[i].SetSlot(inventorySlots[i]);
         }
     }
 }
