@@ -68,6 +68,7 @@ public class GameModeManager : MonoBehaviour
             case GameMode.Gameplay:
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                inventory.SetActive(false);
                 break;
             case GameMode.Building:
                 inventory.SetActive(false);
