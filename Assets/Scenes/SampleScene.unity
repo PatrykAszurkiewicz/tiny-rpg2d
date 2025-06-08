@@ -1464,6 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33153083e1468f64c94718df8cc4c2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 1921463287}
   currentMode: 0
 --- !u!4 &1591979606
 Transform:
