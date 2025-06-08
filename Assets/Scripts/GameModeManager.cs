@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class GameModeManager : MonoBehaviour
 {
     public static GameModeManager instance;
+
+    public GameObject inventory;
     public enum GameMode
     {
         Gameplay,
@@ -23,6 +25,7 @@ public class GameModeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SetGameMode(currentMode);
     }
     public void ToggleBuildMode(InputAction.CallbackContext context)
     {
@@ -67,7 +70,12 @@ public class GameModeManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 break;
             case GameMode.Building:
+                inventory.SetActive(false);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                break;
             case GameMode.Inventory:
+                inventory.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 break;
