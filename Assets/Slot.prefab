@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8520812752988415578}
   - component: {fileID: 6102450488915657769}
   - component: {fileID: 868970002119036335}
+  - component: {fileID: 577340940288952826}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -228,6 +229,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 7432228768238134497}
   quantityText: {fileID: 7539461403461529137}
+--- !u!225 &577340940288952826
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279269296342694358}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5015945836137978422
 GameObject:
   m_ObjectHideFlags: 0
