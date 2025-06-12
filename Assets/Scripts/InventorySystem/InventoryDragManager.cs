@@ -6,6 +6,7 @@ public class InventoryDragManager : MonoBehaviour
     public static InventoryDragManager instance;
     public Image draggedIcon;
     private InventorySlot draggedSlot;
+    private InventorySlotUI draggedSlotUI;
     public float sizeMult = 0.85f;
 
     private void Awake() //singleton
@@ -21,9 +22,10 @@ public class InventoryDragManager : MonoBehaviour
         draggedIcon.gameObject.SetActive(false);
     }
 
-    public void BeginDrag(InventorySlot slot, Sprite icon)
+    public void BeginDrag(InventorySlot slot, Sprite icon, InventorySlotUI slotUI)
     {
         draggedSlot = slot;
+        draggedSlotUI = slotUI;
         draggedIcon.sprite = icon;
         draggedIcon.gameObject.SetActive(true);
         draggedIcon.rectTransform.localScale = Vector3.one * sizeMult;
@@ -36,19 +38,10 @@ public class InventoryDragManager : MonoBehaviour
     public void EndDrag()
     {
         draggedSlot = null;
+        draggedSlotUI = null;
         draggedIcon.gameObject.SetActive(false);
     }
 
     public InventorySlot GetDraggedSlot() => draggedSlot;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public InventorySlotUI GetDraggedSlotUI() => draggedSlotUI;
 }

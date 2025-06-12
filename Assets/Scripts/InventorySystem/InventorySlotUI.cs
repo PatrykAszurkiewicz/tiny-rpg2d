@@ -42,7 +42,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (slotData == null || slotData.IsEmpty)
             return;
 
-        InventoryDragManager.instance.BeginDrag(slotData, iconImage.sprite);
+        InventoryDragManager.instance.BeginDrag(slotData, iconImage.sprite, this);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -55,6 +55,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnDrop(PointerEventData eventData)
     {
         var draggedSlot = InventoryDragManager.instance.GetDraggedSlot();
+        var draggedUI = InventoryDragManager.instance.GetDraggedSlotUI();
 
         // Brak przeci¹gania? Nic nie rób
         if (draggedSlot == null || draggedSlot == slotData)
@@ -65,6 +66,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         (slotData.quantity, draggedSlot.quantity) = (draggedSlot.quantity, slotData.quantity);
 
         RefreshUI();
+        draggedUI.RefreshUI();
+
         InventoryDragManager.instance.EndDrag();
     }
 }
