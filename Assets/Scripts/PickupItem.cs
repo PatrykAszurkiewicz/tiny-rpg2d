@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public ItemData itemData;
+    public int quantity = 1;
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            var inventoryManager = Object.FindFirstObjectByType<InventoryManager>();
+            if (inventoryManager != null)
+            {
+                Debug.Log("Dzia³a");
+                inventoryManager.AddItem(itemData, quantity);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.LogWarning("InventoryManager not found!");
+            }
+        }
     }
 }
