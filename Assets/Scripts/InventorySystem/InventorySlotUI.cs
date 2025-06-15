@@ -50,18 +50,27 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        InventoryDragManager.instance.EndDrag();
+        if (!RectTransformUtility.RectangleContainsScreenPoint(
+    GetComponent<RectTransform>(),
+    Input.mousePosition,
+    null))
+        {
+            InventoryDragManager.instance.DropItemToWorld();
+        }
+        else
+        {
+            InventoryDragManager.instance.EndDrag();
+        }
     }
     public void OnDrop(PointerEventData eventData)
     {
         var draggedSlot = InventoryDragManager.instance.GetDraggedSlot();
         var draggedUI = InventoryDragManager.instance.GetDraggedSlotUI();
 
-        // Brak przeci¹gania? Nic nie rób
         if (draggedSlot == null || draggedSlot == slotData)
             return;
 
-        // Zamiana itemów miêdzy slotami
+        //swap items between slots
         (slotData.item, draggedSlot.item) = (draggedSlot.item, slotData.item);
         (slotData.quantity, draggedSlot.quantity) = (draggedSlot.quantity, slotData.quantity);
 

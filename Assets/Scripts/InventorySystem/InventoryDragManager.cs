@@ -12,6 +12,8 @@ public class InventoryDragManager : MonoBehaviour
     [Header("Drop Item Settings")]
     public GameObject droppedItemPrefab;
     public Camera mainCamera;
+    private Vector2 dragStartPos;
+    private Vector2 dragEndPos;
 
     private void Awake() //singleton
     {
@@ -33,6 +35,8 @@ public class InventoryDragManager : MonoBehaviour
         draggedIcon.sprite = icon;
         draggedIcon.gameObject.SetActive(true);
         draggedIcon.rectTransform.localScale = Vector3.one * sizeMult;
+
+        dragStartPos = Input.mousePosition;
     }
 
     public void Drag(Vector2 position)
@@ -51,15 +55,31 @@ public class InventoryDragManager : MonoBehaviour
         {
             return;
         }
-        Vector3 dropPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        dropPosition.z = 0f;
+        dragEndPos = Input.mousePosition;
+    Vector2 direction = (dragEndPos - dragStartPos).normalized;
 
-        GameObject go = Instantiate(droppedItemPrefab, dropPosition, Quaternion.identity);
-        var pickup = go.GetComponent<PickupItem>();
-        pickup.itemData = draggedSlot.item;
-        pickup.quantity = draggedSlot.quantity;
+    Vector3 spawnPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+    spawnPos.z = 0f;
+
+    GameObject go = Instantiate(droppedItemPrefab, spawnPos, Quaternion.identity);
+
+    var pickup = go.GetComponent<PickupItem>();
+    pickup.itemData = draggedSlot.item;
+    pickup.quantity = draggedSlot.quantity;
+
+    // Dodaj si³ê do Rigidbody2D
+    Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            float forceAmount = 3f;
+            rb.AddForce(direction * forceAmount, ForceMode2D.Impulse);
+        }
 
         draggedSlot.Clear();
+
+        if (draggedSlotUI != null)
+            draggedSlotUI.RefreshUI();
+
         draggedIcon.gameObject.SetActive(false);
         draggedSlot = null;
         draggedSlotUI = null;
