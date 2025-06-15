@@ -45,6 +45,25 @@ public class InventoryDragManager : MonoBehaviour
         draggedSlotUI = null;
         draggedIcon.gameObject.SetActive(false);
     }
+    public void DropItemToWorld()
+    {
+        if(draggedSlot == null || draggedSlot.IsEmpty)
+        {
+            return;
+        }
+        Vector3 dropPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        dropPosition.z = 0f;
+
+        GameObject go = Instantiate(droppedItemPrefab, dropPosition, Quaternion.identity);
+        var pickup = go.GetComponent<PickupItem>();
+        pickup.itemData = draggedSlot.item;
+        pickup.quantity = draggedSlot.quantity;
+
+        draggedSlot.Clear();
+        draggedIcon.gameObject.SetActive(false);
+        draggedSlot = null;
+        draggedSlotUI = null;
+    }
 
     public InventorySlot GetDraggedSlot() => draggedSlot;
     public InventorySlotUI GetDraggedSlotUI() => draggedSlotUI;
