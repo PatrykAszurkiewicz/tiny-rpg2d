@@ -9,6 +9,10 @@ public class InventoryDragManager : MonoBehaviour
     private InventorySlotUI draggedSlotUI;
     public float sizeMult = 0.85f;
 
+    [Header("Drop Item Settings")]
+    public GameObject droppedItemPrefab;
+    public Camera mainCamera;
+
     private void Awake() //singleton
     {
         if (instance == null)
