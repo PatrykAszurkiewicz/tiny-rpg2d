@@ -6,7 +6,7 @@ public class InventoryDragManager : MonoBehaviour
     public static InventoryDragManager instance;
     public Image draggedIcon;
     private InventorySlot draggedSlot;
-    private InventorySlotUI draggedSlotUI;
+    private BaseSlotUI draggedSlotUI;
     public float sizeMult = 0.85f;
 
     [Header("Drop Item Settings")]
@@ -28,7 +28,7 @@ public class InventoryDragManager : MonoBehaviour
         draggedIcon.gameObject.SetActive(false);
     }
 
-    public void BeginDrag(InventorySlot slot, Sprite icon, InventorySlotUI slotUI)
+    public void BeginDrag(InventorySlot slot, Sprite icon, BaseSlotUI slotUI)
     {
         draggedSlot = slot;
         draggedSlotUI = slotUI;
@@ -86,5 +86,6 @@ public class InventoryDragManager : MonoBehaviour
     }
 
     public InventorySlot GetDraggedSlot() => draggedSlot;
-    public InventorySlotUI GetDraggedSlotUI() => draggedSlotUI;
+    public BaseSlotUI GetDraggedSlotUI() => draggedSlotUI;
+    public InventorySlotUI GetDraggedInventorySlotUI() => draggedSlotUI as InventorySlotUI;
 }
