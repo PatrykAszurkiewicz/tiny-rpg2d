@@ -1,36 +1,51 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class TrashSlotUI : MonoBehaviour
+public class TrashSlotUI : MonoBehaviour, IDropHandler
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI quantityText;
 
-    private InventorySlot slotData;
-    private InventorySlotUI slotUI;
-    public void SetSlot(InventorySlot newSlot)
+    private InventorySlot slotData = new InventorySlot();
+
+    private void RefreshUI()
     {
-        // Zniszcz stary przedmiot (jeœli by³)
-        if (slotData != null && !slotData.IsEmpty)
+        if (slotData == null || slotData.IsEmpty)
         {
-            Debug.Log($"[Trash] Zniszczono przedmiot: {slotData.item.name} x{slotData.quantity}");
-            // Mo¿na tu dodaæ efekt graficzny/dŸwiêkowy
+            iconImage.enabled = false;
+            quantityText.text = "";
+        }
+        else
+        {
+            iconImage.enabled = true;
+            iconImage.sprite = slotData.item.icon;
+            quantityText.text = slotData.item.isStackable && slotData.quantity > 1 ? slotData.quantity.ToString() : "";
+        }
+    }
+    public void OnDrop(PointerEventData eventData)
+    {
+        var draggedSlot = InventoryDragManager.instance.GetDraggedSlot();
+        var draggedUI = InventoryDragManager.instance.GetDraggedSlotUI();
+
+        if (draggedSlot == null || draggedSlot.IsEmpty) return;
+
+        if (!slotData.IsEmpty)
+        {
+            slotData.Clear();
         }
 
-        // Ustaw nowy slot jako kopiê
-        slotData = new InventorySlot
-        {
-            item = newSlot.item,
-            quantity = newSlot.quantity
-        };
+        // Przenieœ nowy przedmiot do trash slotu
+        slotData.item = draggedSlot.item;
+        slotData.quantity = draggedSlot.quantity;
 
-        slotUI.RefreshUI();
-        slotData.Clear();
-    }
-    public InventorySlot GetSlotData()
-    {
-        return slotData;
+        // Wyczyœæ Ÿród³owy slot
+        draggedSlot.Clear();
+        if (draggedUI != null) draggedUI.RefreshUI();
+
+        RefreshUI();
+        InventoryDragManager.instance.EndDrag();
     }
 
 }
