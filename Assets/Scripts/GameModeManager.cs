@@ -7,7 +7,7 @@ public class GameModeManager : MonoBehaviour
     public static GameModeManager instance;
 
     public GameObject inventory;
-    GameObject trashbin;
+    public GameObject trashBin;
 
     public enum GameMode
     {
@@ -19,9 +19,8 @@ public class GameModeManager : MonoBehaviour
 
     private void Awake()
     {
-        trashbin = FindAnyObjectByType<GameObject>();
 
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -72,15 +71,18 @@ public class GameModeManager : MonoBehaviour
             case GameMode.Gameplay:
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                trashBin.SetActive(false);
                 inventory.SetActive(false);
                 break;
             case GameMode.Building:
                 inventory.SetActive(false);
+                trashBin.SetActive(false);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 break;
             case GameMode.Inventory:
                 inventory.SetActive(true);
+                trashBin.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 break;
