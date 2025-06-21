@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class TrashSlotUI : BaseSlotUI, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
+
     public void OnDrop(PointerEventData eventData)
     {
         var draggedSlot = InventoryDragManager.instance.GetDraggedSlot();

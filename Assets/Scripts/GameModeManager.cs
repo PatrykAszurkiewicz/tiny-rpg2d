@@ -7,6 +7,8 @@ public class GameModeManager : MonoBehaviour
     public static GameModeManager instance;
 
     public GameObject inventory;
+    GameObject trashbin;
+
     public enum GameMode
     {
         Gameplay,
@@ -17,6 +19,8 @@ public class GameModeManager : MonoBehaviour
 
     private void Awake()
     {
+        trashbin = FindAnyObjectByType<GameObject>();
+
         if(instance == null)
         {
             instance = this;
