@@ -5,24 +5,18 @@ using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
-    Rigidbody2D rb;
-    public float speed = 5f;
-    float horizontalMovement = 0f;
-    public float jumpForce = 10f;
-    public int maxJumps = 2;
+    private Rigidbody2D rb;
+    private PlayerStats stats;
+
+    private float horizontalMovement = 0f;
     private int jumpsLeft;
-    //Ground check ------------------
-    bool isGrounded = true;
-    public Transform groundCheckPlace;
-    public Vector2 groundCheckSize = new Vector2 (1f, 0.2f);
-    public LayerMask groundLayers;
-    //Sprint ------------------------
-    public float speedMult = 1.5f;
+    private bool isGrounded = true;
     private bool isSprinting = false;
-    public float maxStamina = 5f;              // max stamina
-    public float stamina;                      // current stamina
-    public float staminaRegenRate = 1f;        // stamina regen rate
-    public float staminaDrainRate = 1.5f;      // stamina usage rate
+
+    [Header("Ground check")]
+    public Transform groundCheckPlace;
+    public Vector2 groundCheckSize = new Vector2(1f, 0.2f);
+    public LayerMask groundLayers;
 
     void OnDrawGizmosSelected()
     {
@@ -33,42 +27,38 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        stamina = maxStamina;
-        jumpsLeft = maxJumps;
-        
+        stats = GetComponent<PlayerStats>();
+        stats.currentStamina = stats.maxStamina;
+        jumpsLeft = stats.maxJumps;
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheckPlace.position,groundCheckSize,0f,groundLayers);
+        isGrounded = Physics2D.OverlapBox(groundCheckPlace.position, groundCheckSize, 0f, groundLayers);
 
-        float currentSpeed = speed;
-        bool isTryingToSprint = isSprinting && Mathf.Abs(horizontalMovement) > 0.01f && stamina > 0;
+        float currentSpeed = stats.moveSpeed;
+        bool isTryingToSprint = isSprinting && Mathf.Abs(horizontalMovement) > 0.01f && stats.currentStamina > 0;
 
-        if(isTryingToSprint)
+        if (isTryingToSprint)
         {
-            currentSpeed *= speedMult;
-            stamina -= staminaDrainRate * Time.fixedDeltaTime;
-            if (stamina < 0.01f) stamina = 0f;
+            currentSpeed *= stats.sprintMultiplier;
+            stats.currentStamina -= stats.staminaDrainRate * Time.fixedDeltaTime;
+            stats.currentStamina = Mathf.Max(stats.currentStamina, 0f);
         }
         else
         {
-            stamina += staminaRegenRate * Time.fixedDeltaTime;
-            if (stamina > maxStamina) stamina = maxStamina;
+            stats.currentStamina += stats.staminaRegenRate * Time.fixedDeltaTime;
+            stats.currentStamina = Mathf.Min(stats.currentStamina, stats.maxStamina);
         }
 
-        rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocityY);
+        rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocity.y);
 
-        if(horizontalMovement > 0.01f)
-        {
+        if (horizontalMovement > 0.01f)
             FlipRight();
-        }
-        else if(horizontalMovement < -0.01f)
-        {
+        else if (horizontalMovement < -0.01f)
             FlipLeft();
-        }
-
     }
     public void FlipRight()
     {
@@ -87,11 +77,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (isGrounded)
         {
-            jumpsLeft = maxJumps;
+            jumpsLeft = stats.maxJumps;
         }
         if (context.performed && jumpsLeft > 0)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocityX, stats.jumpForce);
             jumpsLeft--;
         }
     }
