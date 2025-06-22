@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
     public float sprintMultiplier = 1.5f;
 
     [Header("Jumping")]
-    public float jumpForce = 10f;
+    public float jumpForce = 5f;
     public int maxJumps = 2;
 
     [Header("Stamina")]
