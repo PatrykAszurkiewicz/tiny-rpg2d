@@ -17,7 +17,7 @@ public class InventorySlotUI : BaseSlotUI, IBeginDragHandler, IDragHandler, IEnd
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!RectTransformUtility.RectangleContainsScreenPoint(
-            GetComponent<RectTransform>(), Input.mousePosition, null))
+             InventoryDragManager.instance.inventoryArea, Input.mousePosition, null))
         {
             InventoryDragManager.instance.DropItemToWorld();
         }

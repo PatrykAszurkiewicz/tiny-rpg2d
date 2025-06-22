@@ -15,6 +15,8 @@ public class InventoryDragManager : MonoBehaviour
     private Vector2 dragStartPos;
     private Vector2 dragEndPos;
 
+    public RectTransform inventoryArea;
+
     private void Awake() //singleton
     {
         if (instance == null)
