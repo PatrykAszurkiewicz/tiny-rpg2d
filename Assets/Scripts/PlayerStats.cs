@@ -22,4 +22,28 @@ public class PlayerStats : MonoBehaviour
     public float staminaRegenRate = 1f;
     public float staminaDrainRate = 1.5f;
     public float currentStamina = 5f;
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth < 0) currentHealth = 0;
+    }
+
+    public void UseMana(float amount)
+    {
+        currentMana -= amount;
+        if (currentMana < 0) currentMana = 0;
+    }
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+    }
+
+    public void RegenerateMana(float amount)
+    {
+        currentMana += amount;
+        if (currentMana > maxMana) currentMana = maxMana;
+    }
 }
