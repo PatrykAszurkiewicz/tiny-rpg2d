@@ -17,6 +17,11 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
+
+        if (currentChest != null)
+        {
+            Debug.Log("Wykryto obiekt: " + currentChest.name);
+        }
     }
     public void Interact(InputAction.CallbackContext context)
     {

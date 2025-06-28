@@ -18,6 +18,7 @@ public class Chest : MonoBehaviour
     }
     public void OpenChest()
     {
+        Debug.Log("Open");
         if (!isOpen)
         {
             chestUI.SetActive(true);
