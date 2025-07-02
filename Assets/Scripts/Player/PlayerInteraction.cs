@@ -27,14 +27,21 @@ public class PlayerInteraction : MonoBehaviour
     }
     public void Interact(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (!context.performed) return;
+
+        if (currentChest == null)
         {
-            currentChest.GetComponent<Chest>()?.OpenChest();
+            //Debug.Log("Brak skrzynki w zasiêgu.");
+            return;
         }
-    }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactRange);
+
+        Chest chest = currentChest.GetComponent<Chest>();
+        if (chest == null)
+        {
+            //Debug.LogWarning("Wykryty obiekt nie ma komponentu Chest.");
+            return;
+        }
+
+        chest.OpenChest();
     }
 }
