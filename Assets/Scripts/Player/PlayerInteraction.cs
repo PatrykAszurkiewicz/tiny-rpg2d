@@ -17,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
-        DetectChest();
+
         /*
         if (currentChest != null)
         {
@@ -27,36 +27,14 @@ public class PlayerInteraction : MonoBehaviour
     }
     public void Interact(InputAction.CallbackContext context)
     {
-        Debug.Log("Klawisz E wciœniêty");
-
-        DetectChest(); // wymuszone sprawdzenie zasiêgu
-
-        if (currentChest == null)
-        {
-            Debug.LogWarning("Brak wykrytego obiektu w momencie interakcji.");
-            return;
-        }
-
         if (context.performed)
         {
-            var chest = currentChest.GetComponent<Chest>();
-            if (chest == null)
-            {
-                Debug.LogWarning("Brak komponentu Chest na obiekcie: " + currentChest.name);
-                return;
-            }
-
-            Debug.Log("Otwieram skrzynkê: " + currentChest.name);
-            chest.OpenChest();
+            currentChest.GetComponent<Chest>()?.OpenChest();
         }
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interactRange);
-    }
-    private void DetectChest()
-    {
-        currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
     }
 }
