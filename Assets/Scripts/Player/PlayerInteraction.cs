@@ -18,17 +18,36 @@ public class PlayerInteraction : MonoBehaviour
     {
         currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
 
+        /*
         if (currentChest != null)
         {
             Debug.Log("Wykryto obiekt: " + currentChest.name);
         }
+        */
     }
     public void Interact(InputAction.CallbackContext context)
     {
-        if (context.performed && currentChest != null)
+        Debug.Log("Klawisz E wciœniêty");
+
+        DetectChest(); // wymuszone sprawdzenie zasiêgu
+
+        if (currentChest == null)
         {
+            Debug.LogWarning("Brak wykrytego obiektu w momencie interakcji.");
+            return;
+        }
+
+        if (context.performed)
+        {
+            var chest = currentChest.GetComponent<Chest>();
+            if (chest == null)
+            {
+                Debug.LogWarning("Brak komponentu Chest na obiekcie: " + currentChest.name);
+                return;
+            }
+
             Debug.Log("Otwieram skrzynkê: " + currentChest.name);
-            currentChest.GetComponent<Chest>()?.OpenChest();
+            chest.OpenChest();
         }
     }
     private void OnDrawGizmosSelected()
