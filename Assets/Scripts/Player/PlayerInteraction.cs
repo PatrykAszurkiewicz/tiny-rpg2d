@@ -17,7 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
-
+        DetectChest();
         /*
         if (currentChest != null)
         {
@@ -54,5 +54,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interactRange);
+    }
+    private void DetectChest()
+    {
+        currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
     }
 }
