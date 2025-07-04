@@ -24,12 +24,15 @@ public class Chest : MonoBehaviour
             GameModeManager.instance.SetGameMode(GameModeManager.GameMode.Inventory);
             isOpen = true;
         }
-        else
+    }
+    public void CloseChest()
+    {
+        if (isOpen)
         {
             chestUI.SetActive(false);
             GameModeManager.instance.SetGameMode(GameModeManager.GameMode.Gameplay);
             isOpen = false;
         }
     }
-
+    public bool IsOpen => isOpen;
 }

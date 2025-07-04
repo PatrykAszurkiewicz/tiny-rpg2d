@@ -4,8 +4,12 @@ using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
 {
     public float interactRange = 1.5f;
+    public float chestCloseDistance = 2.5f;
+
     public LayerMask interactLayer;
     private Collider2D currentChest;
+
+    Chest openChest;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,30 +22,25 @@ public class PlayerInteraction : MonoBehaviour
     {
         currentChest = Physics2D.OverlapCircle(transform.position, interactRange, interactLayer);
 
-        /*
-        if (currentChest != null)
+        if(openChest != null && openChest.IsOpen)
         {
-            Debug.Log("Wykryto obiekt: " + currentChest.name);
+            float distance = Vector2.Distance(transform.position, openChest.transform.position);
+
+            if(distance > chestCloseDistance)
+            {
+                openChest.CloseChest();
+                openChest = null;
+            }
         }
-        */
     }
     public void Interact(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
-
-        if (currentChest == null)
-        {
-            //Debug.Log("Brak skrzynki w zasiêgu.");
-            return;
-        }
-
+        if (currentChest == null) return;
         Chest chest = currentChest.GetComponent<Chest>();
-        if (chest == null)
-        {
-            //Debug.LogWarning("Wykryty obiekt nie ma komponentu Chest.");
-            return;
-        }
+        if (chest == null) return;
 
         chest.OpenChest();
+
     }
 }

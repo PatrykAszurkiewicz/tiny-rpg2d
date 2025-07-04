@@ -70,7 +70,7 @@ public class GameModeManager : MonoBehaviour
         {
             case GameMode.Gameplay:
                 Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 trashBin.SetActive(false);
                 inventory.SetActive(false);
                 break;
@@ -78,13 +78,13 @@ public class GameModeManager : MonoBehaviour
                 inventory.SetActive(false);
                 trashBin.SetActive(false);
                 Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                //Cursor.lockState = CursorLockMode.None;
                 break;
             case GameMode.Inventory:
                 inventory.SetActive(true);
                 trashBin.SetActive(true);
                 Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                //Cursor.lockState = CursorLockMode.None;
                 break;
         }
     }
