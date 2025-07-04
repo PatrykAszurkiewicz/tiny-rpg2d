@@ -5,6 +5,10 @@ public class Chest : MonoBehaviour
     public GameObject chestUI; 
 
     private bool isOpen = false;
+
+    public delegate void ChestClosedHandler(Chest chest);
+    public event ChestClosedHandler OnChestClosed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +28,10 @@ public class Chest : MonoBehaviour
             GameModeManager.instance.SetGameMode(GameModeManager.GameMode.Inventory);
             isOpen = true;
         }
+        else
+        {
+            CloseChest();
+        }
     }
     public void CloseChest()
     {
@@ -32,6 +40,8 @@ public class Chest : MonoBehaviour
             chestUI.SetActive(false);
             GameModeManager.instance.SetGameMode(GameModeManager.GameMode.Gameplay);
             isOpen = false;
+
+            OnChestClosed?.Invoke(this);
         }
     }
     public bool IsOpen => isOpen;

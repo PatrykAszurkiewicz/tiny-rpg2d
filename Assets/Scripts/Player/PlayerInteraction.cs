@@ -11,6 +11,8 @@ public class PlayerInteraction : MonoBehaviour
 
     Chest openChest;
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,7 +31,6 @@ public class PlayerInteraction : MonoBehaviour
             if(distance > chestCloseDistance)
             {
                 openChest.CloseChest();
-                openChest = null;
             }
         }
     }
@@ -42,5 +43,17 @@ public class PlayerInteraction : MonoBehaviour
 
         chest.OpenChest();
 
+        if(chest.IsOpen)
+        {
+            openChest = chest;
+        }
+    }
+    void HandleChestClosed(Chest chest)
+    {
+        if (openChest = chest)
+        {
+            openChest.OnChestClosed -= HandleChestClosed;
+            openChest = null;
+        }
     }
 }
