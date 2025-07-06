@@ -1598,6 +1598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactRange: 1.5
+  chestCloseDistance: 2.5
   interactLayer:
     serializedVersion: 2
     m_Bits: 4096
