@@ -1579,7 +1579,7 @@ MonoBehaviour:
   currentMana: 50
   moveSpeed: 5
   sprintMultiplier: 1.5
-  jumpForce: 10
+  jumpForce: 5
   maxJumps: 2
   maxStamina: 5
   staminaRegenRate: 1
